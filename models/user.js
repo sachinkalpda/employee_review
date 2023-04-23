@@ -19,7 +19,13 @@ const userSchema = mongoose.Schema({
         required : true,
         enum : ['user','admin'],
         default : 'user'
-    }
+    },
+    assigned : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'User'
+        }
+    ]
 },{
     timestamps : true,
 })

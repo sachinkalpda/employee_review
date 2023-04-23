@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="projects-page-title">
-                    <h2>All Employees</h2>
-                    <a href="/admin/users/add" class="btn btn-primary">Add Employee</a>
+                    <h2>All Reviews</h2>
+                    <a href="/admin/reviews/add" class="btn btn-primary">Add Review</a>
                 </div>
             </div>
             <div class="col-md-12">
@@ -12,30 +12,36 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Employee</th>
                         <th scope="col">Role</th>
-                        <th scope="col">Joined On</th>
+                        <th scope="col">Stars</th>
+                        <th scope="col">Reviewed By</th>
+                        <th scope="col">Reviewed On</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% users.forEach(function(user,index){ %>
+                      <% reviews.forEach(function(review,index){ %>
                       <tr>
                         <th scope="row"><%= index+1 %></th>
-                        <td><%= user.name %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.role %></td>
-                        <td><%= moment(user.createdAt).fromNow() %></td>
+                        <td><%= review.user.name %></td>
+                        <td><%= review.user.role %></td>
+                        <td><%= review.stars %></td>
+                        <td><%= review.reviewer.name %></td>
+                        <td><%= moment(review.createdAt).fromNow() %></td>
                         <td>
-                          <a href="/admin/users/edit/<%= user.id %>"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
-                          <a href="/admin/users/delete/<%= user.id %>" class="delete"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                          <a href="/admin/reviews/view/<%= review.id %>" title="View Information"><i class="fa-solid fa-circle-info text-info"></i></a>
+                          <a href="/admin/reviews/edit/<%= review.id %>"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
+                          <a href="/admin/reviews/delete/<%= review.id %>" class="delete"><i class="fa-regular fa-trash-can text-danger"></i></a>
                         </td>
                       </tr>
                       <% }) %>
                       
                     </tbody>
                   </table>
+                  <% if(reviews.length == 0){ %>
+                    <h4>No Reviews Found!</h4>
+                    <%} %>
             </div>
         </div>
     </div>

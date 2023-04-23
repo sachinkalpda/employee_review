@@ -90,3 +90,9 @@ module.exports.deleteEmployee = async function(req,res){
         return;
     }
 }
+
+module.exports.assign = function(req,res){
+    return res.render('assign_users',{
+        title : 'Assign Employee | Admin Employee Review'
+    })
+}

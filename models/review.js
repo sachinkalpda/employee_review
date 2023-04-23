@@ -20,9 +20,13 @@ const reviewSchema = mongoose.Schema({
         ref : 'User'
     },
     stars :{
-        type : Integer,
+        type : Number,
+        min : 1,
+        max : 5,
         required : true,
     }
+},{
+    timestamps : true,
 });
 
 const Review = mongoose.model('Review',reviewSchema);

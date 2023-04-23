@@ -30,6 +30,8 @@ router.get('/users/edit/:id',passport.checkAuthentication,passport.checkAdmin,da
 router.get('/users/delete/:id',passport.checkAuthentication,passport.checkAdmin,dashboardController.deleteEmployee);
 
 
+router.get('/employee/assign',passport.checkAuthentication,passport.checkAdmin,dashboardController.assign);
+
 router.use('/reviews',require('./review'));
 
 module.exports = router;
