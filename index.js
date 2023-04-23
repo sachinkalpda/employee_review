@@ -23,6 +23,8 @@ app.use(express.urlencoded());
 app.use(expressLayout);
 app.use(express.static('./assets'));
 
+app.set('layout', 'layouts/layout');
+
 // for session 
 
 const session = require('express-session');

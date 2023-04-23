@@ -61,4 +61,22 @@ passport.setAuthenticatedUser = function(req,res,next){
     next();
 }
 
+passport.checkAdmin = function(req,res,next){
+    if(req.isAuthenticated()){
+        if(req.user.role == 'admin'){
+            return next();
+        }
+        return res.redirect('/user/login')
+    }
+    return res.redirect('/user/login');    
+}
+passport.checkUser = function(req,res,next){
+    if(req.isAuthenticated()){
+        if(req.user.role == 'user'){
+            return next();
+        }
+        return res.redirect('/user/login')
+    }
+    return res.redirect('/user/login');
+}
 module.exports = passport;

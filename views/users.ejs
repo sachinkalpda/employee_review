@@ -1,0 +1,42 @@
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="projects-page-title">
+                    <h2>All Employees</h2>
+                    <a href="/admin/users/add" class="btn btn-primary">Add Employee</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Joined On</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% users.forEach(function(user,index){ %>
+                      <tr>
+                        <th scope="row"><%= index+1 %></th>
+                        <td><%= user.name %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role %></td>
+                        <td><%= moment(user.createdAt).fromNow() %></td>
+                        <td>
+                          <a href="/admin/users/edit/<%= user.id %>"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
+                          <a href="/admin/users/delete/<%= user.id %>" class="delete"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                        </td>
+                      </tr>
+                      <% }) %>
+                      
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</main>
