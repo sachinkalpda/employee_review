@@ -149,7 +149,7 @@ aside{
 .admin-container{
     padding: 1rem 1rem;
 }
-.admin-container h3{
+.admin-container .projects-page-title{
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     padding: 0.5rem;
 }
@@ -159,7 +159,15 @@ aside{
 .admin-container .form-group{
     margin: 0.5rem 0rem;
 }
-
+.select-container{
+    position: relative;
+}
+.select-container button{
+    position: absolute;
+    margin-top: -1px;
+    margin-left: -100px;
+    width: 100px;
+}
 
 /* style for review star */
 
@@ -202,3 +210,20 @@ aside{
 }
 
 
+
+/* review page styling */
+.user-info h5{
+    margin-bottom: 0px !important;
+}
+.user-info p{
+    text-decoration: underline;
+}
+
+.feedback span{
+    font-weight: 500;
+    color: #000;
+}
+.feedback span:last-child{
+    text-decoration: underline;
+    color: gray;
+}

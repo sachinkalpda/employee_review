@@ -4,7 +4,7 @@
 $(document).ready(function(){
     console.log('working');
 
-    $('.delete').on('click',function(e){
+    $(document).on('click','.delete',function(e){
         e.preventDefault();
 
         var link = $(this).attr("href");

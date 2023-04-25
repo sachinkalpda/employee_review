@@ -2,31 +2,49 @@
     <div class="container admin-container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Assign Users</h3>
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-custom" placeholder="Enter Name..." value="<%= (locals.employee)? employee.name : '' %>">
+                <div class="projects-page-title">
+                    <h3>Assign Users</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="employee">Select Employee</label>
+                        <select id="employee" class="form-custom">
+                            <option value="" hidden>Seect Employee</option>
+                            <% for(let employee of employees){ %>
+                            <option value="<%= employee.id %>"><%= employee.name %></option>
+                            <%} %>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" class="form-custom" placeholder="Enter Email..."
-                        value="<%= (locals.employee)? employee.email : '' %>">
+                    <div class="col-md-6">
+                        <label for="employee">Assign Employee</label>
+                        <div class="select-container">
+                            <select id="assign_employee" class="form-custom">
+                                <option>Please Select Employee First</option>
+                            </select>
+                            <button class="btn btn-info text-white" id="assign">Assign</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-custom"
-                            placeholder="Enter Password...">
+                    <div class="col-md-12">
+                        <h5 class="mt-4 mb-2">Assigned Employee For Review</h5>
                     </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Confirm Password</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-custom"
-                            placeholder="Re-enter Password...">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Assigned</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="assigned">
+                              
+                             
+                              
+                            </tbody>
+                          </table>
+                          <h5>No Data Found!</h5>
                     </div>
-
-
-                    <button type="submit" class="btn btn-primary"><%= (locals.employee)?'Update' : 'Add' %></button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

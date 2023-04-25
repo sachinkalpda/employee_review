@@ -16,6 +16,9 @@ router.post('/save',passport.checkAuthentication,passport.checkAdmin,reviewContr
 router.get('/delete/:id',passport.checkAuthentication,passport.checkAdmin,reviewController.delete);
 
 
+router.get('/view/:id',passport.checkAuthentication,passport.checkAdmin,reviewController.view);
+
+
 
 
 

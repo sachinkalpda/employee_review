@@ -20,6 +20,12 @@ const userSchema = mongoose.Schema({
         enum : ['user','admin'],
         default : 'user'
     },
+    reviews : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Review'
+        }
+    ],
     assigned : [
         {
             type : mongoose.Schema.Types.ObjectId,

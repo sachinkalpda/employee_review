@@ -32,6 +32,12 @@ router.get('/users/delete/:id',passport.checkAuthentication,passport.checkAdmin,
 
 router.get('/employee/assign',passport.checkAuthentication,passport.checkAdmin,dashboardController.assign);
 
+router.post('/employee/assign/all',passport.checkAuthentication,passport.checkAdmin,dashboardController.getEmployee);
+
+router.post('/employee/assign/new',passport.checkAuthentication,passport.checkAdmin,dashboardController.assignEmployee);
+
+router.post('/employee/assign/remove',passport.checkAuthentication,passport.checkAdmin,dashboardController.removeAssigned);
+
 router.use('/reviews',require('./review'));
 
 module.exports = router;

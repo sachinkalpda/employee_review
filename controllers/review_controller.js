@@ -36,25 +36,34 @@ module.exports.addReview = async function(req,res){
 
 module.exports.createReview = async function(req,res){
     try {
-        let user = await Review.find({ 
+        let reviewExist = await Review.find({ 
             reviewer : req.user._id,
             user : req.body.employee,
             });
 
-        if(user.length == 0){
-            let review = await Review.create({
-                review : req.body.review,
-                feedback : req.body.feedback,
-                user : req.body.employee,
-                reviewer : req.user._id,
-                stars : req.body.rate,
-            });
-            if(review){
-                req.flash('success','Review Added!');
-                return res.redirect('/admin/reviews/all');
+        if(reviewExist.length == 0){
+            let user = await User.findById(req.body.employee);
+            if(user){
+                let review = await Review.create({
+                    review : req.body.review,
+                    feedback : req.body.feedback,
+                    user : req.body.employee,
+                    reviewer : req.user._id,
+                    stars : req.body.rate,
+                });
+                if(review){
+                    user.reviews.push(review._id);
+                    await user.save();
+                    req.flash('success','Review Added!');
+                    return res.redirect('/admin/reviews/all');
+                }
+                req.flash('error','Something Went Wrong!');
+                return res.redirect('back');
+
             }
-            req.flash('error','Something Went Wrong!');
+            req.flash('error','Invalid Employee!');
             return res.redirect('back');
+            
         }
         req.flash('error',"Unauthorize action");
         return res.redirect('back');
@@ -65,6 +74,25 @@ module.exports.createReview = async function(req,res){
         return;
     }
 }
+
+module.exports.view = async function(req,res){
+    try {
+        let reveiw = await Review.findById(req.params.id).populate('user').populate('reviewer');
+        if(reveiw){
+            return res.render('review',{
+                title : 'Review Information | Admin Employee Review',
+                review : reveiw
+            });
+        }
+        req.flash('error','Invalid Review!');
+        return res.redirect('back');
+        
+    } catch (error) {
+        console.log('Error in review view',error);
+        return;
+    }
+}
+
 
 module.exports.delete = async function(req,res){
     try {
