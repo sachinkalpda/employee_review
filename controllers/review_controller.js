@@ -43,29 +43,36 @@ module.exports.createReview = async function(req,res){
 
         if(reviewExist.length == 0){
             let user = await User.findById(req.body.employee);
-            if(user){
-                let review = await Review.create({
-                    review : req.body.review,
-                    feedback : req.body.feedback,
-                    user : req.body.employee,
-                    reviewer : req.user._id,
-                    stars : req.body.rate,
-                });
-                if(review){
-                    user.reviews.push(review._id);
-                    await user.save();
-                    req.flash('success','Review Added!');
-                    return res.redirect('/admin/reviews/all');
+            let reviewer = await User.findById(req.user._id);
+            if(reviewer){
+                if(user){
+                    let review = await Review.create({
+                        review : req.body.review,
+                        feedback : req.body.feedback,
+                        user : req.body.employee,
+                        reviewer : req.user._id,
+                        stars : req.body.rate,
+                    });
+                    if(review){
+                        user.reviews.push(review._id);
+                        await user.save();
+                        reviewer.assigned.pull(user._id);
+                        await reviewer.save();
+                        req.flash('success','Review Added!');
+                        return res.redirect('back');
+                    }
+                    req.flash('error','Something Went Wrong!');
+                    return res.redirect('back');
+    
                 }
-                req.flash('error','Something Went Wrong!');
+                req.flash('error','Invalid Employee!');
                 return res.redirect('back');
-
             }
-            req.flash('error','Invalid Employee!');
+            req.flash('error','Invalid Reviewer!');
             return res.redirect('back');
             
         }
-        req.flash('error',"Unauthorize action");
+        req.flash('error',"Already Reviewed!");
         return res.redirect('back');
 
         
@@ -98,6 +105,9 @@ module.exports.delete = async function(req,res){
     try {
         let review = await Review.findById(req.params.id);
         if(review){
+            let user = await User.findById(review.user);
+            user.reviews.pull(review._id);
+            await user.save();
             await review.deleteOne();
             return res.redirect('back');
         }

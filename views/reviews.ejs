@@ -26,12 +26,12 @@
                         <th scope="row"><%= index+1 %></th>
                         <td><%= review.user.name %></td>
                         <td><%= review.user.role %></td>
-                        <td><%= review.stars %></td>
+                        <td><%= review.stars %><span class="text-warning">★</span></td>
                         <td><%= review.reviewer.name %></td>
                         <td><%= moment(review.createdAt).fromNow() %></td>
                         <td>
-                          <a href="/admin/reviews/view/<%= review.id %>" title="View Information"><i class="fa-solid fa-circle-info text-info"></i></a>
-                          <a href="/admin/reviews/edit/<%= review.id %>"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
+                          <a href="/admin/reviews/view/<%= review.id %>" class="me-2" title="View Information"><i class="fa-solid fa-circle-info text-info"></i></a>
+                          <a href="/admin/reviews/edit/<%= review.id %>" class="me-2"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
                           <a href="/admin/reviews/delete/<%= review.id %>" class="delete"><i class="fa-regular fa-trash-can text-danger"></i></a>
                         </td>
                       </tr>

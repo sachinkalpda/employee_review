@@ -28,5 +28,15 @@ $(document).ready(function(){
             }
         })
     })
+
+
+    let bars = $('.bar');
+
+    $.each(bars,function(bar,index){
+        let percentage = $(this).data('percentage') +"%";
+        $(this).css('width',percentage);
+    })
+    
+
    
 });

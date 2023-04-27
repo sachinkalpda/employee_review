@@ -21,12 +21,11 @@
             </div>
             <div class="nav-right">
                 <div class="nav-options">
-                   <a href="#" role="button" class="dropdown" data-bs-toggle="dropdown" aria-expanded="false"><img src="#" height="50px" width="50px" class="rounded-circle" ></a>
+                   <a href="#" role="button" class="dropdown" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/user.jpg" height="50px" width="50px" class="rounded-circle" ></a>
                    <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Hii User</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Hii <%= locals.user.name %></a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Log Out</a></li>
+                    <li><a class="dropdown-item" href="/user/logout">Log Out</a></li>
                   </ul>
                 </div>
             </div>

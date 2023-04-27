@@ -4,7 +4,7 @@
             <div class="nav-left">
                 <div class="welcome-text">
                     Welcome <% if(locals.user){ %>
-                        <%= user.name %> 
+                        <span><%= user.name %></span> 
                     <%} %>
                 </div>
             </div>
@@ -12,7 +12,7 @@
             </div>
             <div class="nav-right">
                 <div class="nav-options">
-                   <a href="/user/logout" title="Log Out"><i class="fa-solid fa-power-off text-danger"></i></a>
+                   <a href="/user/logout" title="Log Out"><i class="fa-solid fa-power-off text-danger"></i> Log Out</a>
                 </div>
             </div>
         </nav>

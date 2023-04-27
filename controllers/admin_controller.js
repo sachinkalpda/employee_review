@@ -1,16 +1,24 @@
 const User = require('../models/user');
+const Review = require('../models/review')
 const bcrypt = require('bcrypt');
 
 
-module.exports.dashboard = function(req,res){
-    return res.render('dashboard');
+module.exports.dashboard =async function(req,res){
+    let usersCount = await User.find().count();
+    let reviewCount = await Review.find().count();
+    return res.render('dashboard',{
+        title : 'Dashboard | Admin Employee Review',
+        usersCount : usersCount,
+        reviewCount : reviewCount
+    });
 }
 
 
 
 module.exports.allUsers = async function(req,res){
     try {
-        let users = await User.find( { _id : {$nin : req.user.id} }).populate('reviews');
+        let users = await User.find( { _id : {$nin : req.user.id} })
+        
         if(users){
             return res.render('users',{
                 users : users
@@ -73,10 +81,45 @@ module.exports.editEmployee = async function(req,res){
     }
 }
 
+module.exports.promote = async function(req,res){
+    try {
+        let user = await User.findById(req.params.id);
+        if(user){
+            user.role = 'admin';
+            await user.save();
+            req.flash('success','User Promoted To Admin');
+            return res.redirect('back');
+        }
+        req.flash('error','Invalid User');
+        return res.redirect('back');
+    } catch (error) {
+        console.log('Error in promoting',error);
+        return;
+    }
+}
+
 module.exports.deleteEmployee = async function(req,res){
     try {
         let user = await User.findById(req.params.id);
         if(user){
+            let assignedUsers =  await User.find({
+                assigned : {$in : user.id},
+            });
+            let reviewers = await Review.find({
+                reviewer : { $in : user.id}
+            });
+            for(let reviewer of reviewers){
+                let reviewUser = await User.findById(reviewer.user);
+                reviewUser.reviews.pull(reviewer._id);
+                await reviewUser.save();
+            }
+            for(let employee of assignedUsers){
+                employee.assigned.pull(user._id);
+                await employee.save();
+            }
+            await Review.deleteMany( {_id : { $in : user.reviews}});
+            await Review.deleteMany( { reviewer : user._id});
+
             await user.deleteOne();
             req.flash('success','User Delete Successfully');
             return res.redirect('back');
@@ -191,3 +234,62 @@ module.exports.removeAssigned = async function(req,res){
         return;
     }
 }
+
+
+module.exports.userReviews = async function(req,res){
+        try {
+            let user = await User.findById(req.params.id).populate('reviews');
+            let reviews = await Review.aggregate([
+                {
+                    $match : {
+                        user : user._id,
+                    }
+                },
+
+                {
+                    $group : {
+                        _id : '$stars',
+                        total : { $sum : 1},     
+                    },
+                    
+                },
+                {
+                    $sort : {
+                        _id : -1,
+                    }
+                }
+                
+            ]);
+            console.log(reviews);
+            if(user){
+                return res.render('user_reviews',{
+                    title : `${user.name} Reviews | Admin Employee Review`,
+                    employee  : user,
+                    reviews : reviews,
+                });
+            }
+            req.flash('error','Invalid Employee!');
+            return res.redirect('back');
+            
+        } catch (error) {
+            console.log('Error in user Reviews',error);
+            return;
+        }
+}
+
+module.exports.getReview = async function(req,res){
+    try {
+        let reviews = await Review.find({
+            user : req.body.employee,
+            stars : req.body.stars,
+        }).populate('reviewer');
+        return res.json(200,{
+            message : 'success',
+            reviews : reviews
+        })
+
+    } catch (error) {
+        console.log('error in get review',error);
+        return;
+    }
+}   

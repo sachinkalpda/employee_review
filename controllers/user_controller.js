@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Review = require('../models/review');
 
 const bcrypt = require('bcrypt');
 
@@ -17,10 +18,10 @@ module.exports.login = function(req,res){
 
 module.exports.createSession = function(req,res){
     if(req.user.role == 'user'){
-        req.flash('success','Login Successfully');
+        req.flash('success','User Login Successfully');
         return res.redirect('/');
     }else if(req.user.role == 'admin'){
-        req.flash('success','Login Successfully');
+        req.flash('success','Admin Login Successfully');
         return res.redirect('/admin/dashboard');
     }
     
@@ -73,4 +74,23 @@ module.exports.logout = function(req,res){
         req.flash('success', 'Logout Successfully');
         return res.redirect('/user/login');
     });
+}
+
+
+
+module.exports.reviewEmployee = async  function(req,res){
+    try {
+        let user = await User.findById(req.params.id);
+        if(user){
+            return res.render('add_user_review',{
+                employee : user,
+            });
+        }
+        req.flash('error','Invalid User!');
+        return res.redirect('back');
+        
+    } catch (error) {
+        console.log('Error in review',error);
+        return;
+    }
 }

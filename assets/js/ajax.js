@@ -29,6 +29,22 @@ $(document).ready(function(){
         
     }
 
+
+    function renderReview(reviews){
+        let reviewList = $('.review-list');
+        reviewList.html('')
+        if(reviews.length == 0){
+            reviewList.html('No Review Found!');
+        }
+        reviews.forEach(function(review,index){
+            reviewList.append(`<div class="review-detail">
+            <h6>Reviewed By &nbsp;</h6><span>${review.reviewer.name}</span>
+            <p>${review.review}</p>
+            <a href="/admin/reviews/view/${review._id}">View Detailed Info</a>
+        </div>`);
+        });
+    }
+
     $('#employee').on('change',function(){
         let employeeId = $('#employee').val();
         console.log(employeeId);
@@ -121,6 +137,39 @@ $(document).ready(function(){
         });
 
         
+    });
+
+
+    // ajax request to get review by stars
+
+    $('.getReview').on('click',function(e){
+        e.preventDefault();
+        let employeeId = $(this).data('employee');
+
+        let stars = $(this).data('stars');
+
+        $('review-list').html('Please Wait...')
+        $.ajax({
+            type: 'post',
+            url : '/admin/users/review/get',
+            data :  {
+                employee : employeeId,
+                stars : stars
+            },
+        }).done(function(data){
+            console.log(data.reviews);
+            renderReview(data.reviews);
+            new Noty({
+                theme: 'relax',
+                text: data.message,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500
+            }).show();
+        })
+        .fail(function(err){
+            console.log("error in completing request");
+        });
     });
 
 });

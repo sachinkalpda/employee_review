@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="projects-page-title">
-                    <h2>All Employees</h2>
+                    <h2>Employees For Review</h2>
 
                 </div>
             </div>
@@ -21,23 +21,21 @@
                     
                     <tbody>
                       
-                     <% projects.forEach(function(project, i){ %>
+                     <% user.assigned.forEach(function(employee, i){ %>
                       <tr>
                         <th scope="row"><%= i+1 %></th>
-                        <td><%= project.title %></td>
-                        <td><%= project.user.name %></td>
-                        <td><%= project.bugs.length + project.closed.length %></td>
-                        <td><a href="/project/view/<%= project._id %>" title="View Project"><i class="fa-regular fa-eye"></i></a>
-                            <% if(locals.user.id == project.user.id){ %>
-                                <a href="/project/delete/<%= project._id %>" class="delete" title="Delete Project"><i class="fa-regular fa-trash-can text-danger"></i></a>
-                            <%} %>
+                        <td><%= employee.name %></td>
+                        <td><%= employee.email %></td>
+                        <td><%= moment(employee.createdAt).fromNow() %></td>
+                        <td><a href="/user/review/<%= employee._id %>" title="View Project">Review</a>
+                          
                         </td>
                       </tr>
                       <% }) %>
                       
                     </tbody>
                   </table>
-                  <% if(projects.length == 0){ %>
+                  <% if(user.assigned.length == 0){ %>
                     <h3>No Data Found!</h3>
                   <%} %>
             </div>

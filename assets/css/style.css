@@ -53,7 +53,15 @@ header{
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }
-
+.welcome-text span{
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+}
+.welcome-text span:hover{
+    color: orangered;
+}
 .nav-left{
     flex:0 0 10%;
 }
@@ -89,7 +97,15 @@ header{
 .nav-right{
     flex:0 0 10%;
 }
-
+.nav-options a{
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease-in;
+}
+.nav-options a:hover{
+    color: orangered;
+}
 .projects-page-title{
     margin: 2rem 0rem;
     padding: 1rem 0rem;
@@ -122,7 +138,6 @@ aside{
     margin: 0;
 }
 .sidebar-body ul li{
-    padding: 8px 15px;
     /* border-bottom: 1px solid rgba(0, 0, 0, 0.3); */
     transition: all 0.3s ease-in;
 }
@@ -133,6 +148,8 @@ aside{
     color: #fff;
 }
 .sidebar-body ul li a{
+    display: block;
+    padding: 8px 15px;
     text-decoration: none;
     color: #000;
     font-size: 16px;
@@ -168,7 +185,71 @@ aside{
     margin-left: -100px;
     width: 100px;
 }
-
+/* dashboard styling */
+.c-dashboardInfo {
+    margin-bottom: 15px;
+  }
+  .c-dashboardInfo .wrap {
+    background: #ffffff;
+    box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 40px 25px 20px;
+    height: 100%;
+  }
+  .c-dashboardInfo__title,
+  .c-dashboardInfo__subInfo {
+    color: #6c6c6c;
+    font-size: 1.18em;
+  }
+  .c-dashboardInfo span {
+    display: block;
+  }
+  .c-dashboardInfo__count {
+    font-weight: 600;
+    font-size: 2.5em;
+    line-height: 64px;
+    color: #323c43;
+  }
+  .c-dashboardInfo .wrap:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    content: "";
+  }
+  
+  .c-dashboardInfo:nth-child(1) .wrap:after {
+    background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+  }
+  .c-dashboardInfo:nth-child(2) .wrap:after {
+    background: linear-gradient(81.67deg, #0084f4 0%, #1a4da2 100%);
+  }
+  .c-dashboardInfo:nth-child(3) .wrap:after {
+    background: linear-gradient(69.83deg, #0084f4 0%, #00c48c 100%);
+  }
+  .c-dashboardInfo:nth-child(4) .wrap:after {
+    background: linear-gradient(81.67deg, #ff647c 0%, #1f5dc5 100%);
+  }
+  .c-dashboardInfo__title svg {
+    color: #d7d7d7;
+    margin-left: 5px;
+  }
+  .MuiSvgIcon-root-19 {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 24px;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  
 /* style for review star */
 
 .rate {
@@ -227,3 +308,82 @@ aside{
     text-decoration: underline;
     color: gray;
 }
+
+.reviews-details h5{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.review-detail{
+    margin: 1rem 0rem;;
+}
+.review-detail h6{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.review-detail span{
+    font-size: 15px;
+    text-decoration: underline;
+    color: gray;
+}
+.review-detail p{
+    margin-bottom: 0rem;
+}
+.review-detail a{
+    font-size: 14px;
+    transition: all 0.3s ease-in;
+}
+.review-detail a:hover{
+    color: orangered;
+    text-decoration: none;
+}
+
+/* Three column layout */
+.side {
+    float: left;
+    width: 15%;
+    margin-top: 10px;
+  }
+  
+  .middle {
+    float: left;
+    width: 70%;
+    margin-top: 10px;
+  }
+  
+  /* Place text to the right */
+  .right-review {
+    text-align: right;
+  }
+  
+  /* Clear floats after the columns */
+  .rowt:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The bar container */
+  .bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Individual bars */
+  .bar {width: 60%; height: 18px; background-color: #04AA6D;}
+  .bar-4 {width: 30%; height: 18px; background-color: #2196F3;}
+  .bar-3 {width: 10%; height: 18px; background-color: #00bcd4;}
+  .bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+  .bar-1 {width: 15%; height: 18px; background-color: #f44336;}
+  
+  /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+  @media (max-width: 400px) {
+    .side, .middle {
+      width: 100%;
+    }
+    /* Hide the right column on small screens */
+    .right {
+      display: none;
+    }
+  }
