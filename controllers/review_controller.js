@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const Review = require('../models/review');
 
+
+// to show all reviews in admin panel
 module.exports.allReviews = async function(req,res){
     try {
         let reviews = await Review.find({user : { $nin : req.user.id}}).populate('user').populate('reviewer');
@@ -19,6 +21,8 @@ module.exports.allReviews = async function(req,res){
     }
 }
 
+
+// for rendering the add review page
 module.exports.addReview = async function(req,res){
     try {
         let users = await User.find({_id : {$nin : req.user.id}});
@@ -33,7 +37,7 @@ module.exports.addReview = async function(req,res){
     }
 }
 
-
+// for adding a new review for a user by admin
 module.exports.createReview = async function(req,res){
     try {
         let reviewExist = await Review.find({ 
@@ -82,6 +86,7 @@ module.exports.createReview = async function(req,res){
     }
 }
 
+// for viewing the review information
 module.exports.view = async function(req,res){
     try {
         let reveiw = await Review.findById(req.params.id).populate('user').populate('reviewer');
@@ -100,6 +105,7 @@ module.exports.view = async function(req,res){
     }
 }
 
+// to delete the review in admin panel
 
 module.exports.delete = async function(req,res){
     try {

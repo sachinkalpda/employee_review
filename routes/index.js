@@ -10,6 +10,7 @@ router.use((req, res, next) => {
 const passport = require('passport');
 const homeController = require('../controllers/home_controller');
 
+// route for homepage
 router.get('/',passport.checkAuthentication,passport.checkUser,homeController.home);
 
 router.use('/user',require('./user'));

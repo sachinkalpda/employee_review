@@ -3,18 +3,21 @@ const Review = require('../models/review')
 const bcrypt = require('bcrypt');
 
 
+// function for admin dashboard
 module.exports.dashboard =async function(req,res){
-    let usersCount = await User.find().count();
+    let usersCount = await User.find({role : 'user'}).count();
+    let adminCount = await User.find({role : 'admin'}).count();
     let reviewCount = await Review.find().count();
     return res.render('dashboard',{
         title : 'Dashboard | Admin Employee Review',
         usersCount : usersCount,
-        reviewCount : reviewCount
+        reviewCount : reviewCount,
+        adminCount : adminCount
     });
 }
 
 
-
+// for showing all users in admin panel
 module.exports.allUsers = async function(req,res){
     try {
         let users = await User.find( { _id : {$nin : req.user.id} })
@@ -33,13 +36,15 @@ module.exports.allUsers = async function(req,res){
     }
 }
 
+// for adding render new employee page 
+
 module.exports.addEmployee = async function(req,res){
     return res.render('add_employee',{
         title : 'Add Employee | Admin Employee Review'
     });
 }
 
-
+// for creating new employee 
 module.exports.createEmployee = async function(req,res){
     try {
         if(req.body.password == req.body.confirm_password){
@@ -64,6 +69,8 @@ module.exports.createEmployee = async function(req,res){
     }
 }
 
+// for editiing the existed employee
+
 module.exports.editEmployee = async function(req,res){
     try {
         let user = await User.findById(req.params.id);
@@ -80,6 +87,8 @@ module.exports.editEmployee = async function(req,res){
         return;
     }
 }
+
+// to promote the  user to admin
 
 module.exports.promote = async function(req,res){
     try {
@@ -98,6 +107,8 @@ module.exports.promote = async function(req,res){
     }
 }
 
+
+// for deleting the existed employee
 module.exports.deleteEmployee = async function(req,res){
     try {
         let user = await User.findById(req.params.id);
@@ -134,6 +145,8 @@ module.exports.deleteEmployee = async function(req,res){
     }
 }
 
+
+// for rendering the assign user page
 module.exports.assign = async function(req,res){
     try {
         let users = await User.find({
@@ -175,6 +188,8 @@ module.exports.getEmployee = async function(req,res){
     }
 }   
 
+// for assigning an employee to another for review
+
 module.exports.assignEmployee = async function(req,res){
     try {
         let employee = await User.findOne({
@@ -206,6 +221,8 @@ module.exports.assignEmployee = async function(req,res){
     }
 }
 
+
+// for removing the assigned user for review
 module.exports.removeAssigned = async function(req,res){
     try {
         let employee = await User.findById(req.body.employeeId);
@@ -235,7 +252,7 @@ module.exports.removeAssigned = async function(req,res){
     }
 }
 
-
+// for showing all reviews belongs to a user
 module.exports.userReviews = async function(req,res){
         try {
             let user = await User.findById(req.params.id).populate('reviews');
@@ -277,6 +294,7 @@ module.exports.userReviews = async function(req,res){
         }
 }
 
+// ajax request to get the review by rating stars
 module.exports.getReview = async function(req,res){
     try {
         let reviews = await Review.find({

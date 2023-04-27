@@ -47,6 +47,14 @@ nav{
     align-items: center;
 }
 
+.nav-logo a{
+    text-decoration: none;
+    transition: all 0.2s ease-in;
+    color: #000;
+}
+.nav-logo a:hover{
+    color: orangered;
+}
 
 header{
     border: 1px solid rgba(0,0,0,0.2);

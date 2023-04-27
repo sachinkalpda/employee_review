@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+
+// for rendering the user home page
 module.exports.home =async  function(req,res){
     try {
         let user = await User.findById(req.user.id).populate('assigned');

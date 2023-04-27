@@ -31,18 +31,23 @@ router.get('/users/promote/:id',passport.checkAuthentication,passport.checkAdmin
 // route for delete the existing user
 router.get('/users/delete/:id',passport.checkAuthentication,passport.checkAdmin,adminController.deleteEmployee);
 
+// route for view review information
 router.get('/users/review/:id',passport.checkAuthentication,passport.checkAdmin,adminController.userReviews); 
 
-
+// ajax route for get reviews 
 router.post('/users/review/get',passport.checkAuthentication,passport.checkAdmin,adminController.getReview);
 
-
+// route for render the assign user page
 router.get('/employee/assign',passport.checkAuthentication,passport.checkAdmin,adminController.assign);
 
+// route for getting all assign user
 router.post('/employee/assign/all',passport.checkAuthentication,passport.checkAdmin,adminController.getEmployee);
 
+
+// route for assigning a new user
 router.post('/employee/assign/new',passport.checkAuthentication,passport.checkAdmin,adminController.assignEmployee);
 
+// route for removing the assigned user
 router.post('/employee/assign/remove',passport.checkAuthentication,passport.checkAdmin,adminController.removeAssigned);
 
 router.use('/reviews',require('./review'));
