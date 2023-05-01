@@ -16,7 +16,7 @@ module.exports.home =async  function(req,res){
         
     } catch (error) {
         console.log('Error in Homepage',error);
-        return;
+        return res.render('error');
     }
     
 }

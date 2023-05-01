@@ -4,7 +4,7 @@
   "description": "Employee Review System",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon start index.js",
+    "start": "nodemon start index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "express-session": "^1.17.3",
     "moment": "^2.29.4",
     "mongoose": "^7.0.4",
+    "node-input-validator": "^4.5.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   }

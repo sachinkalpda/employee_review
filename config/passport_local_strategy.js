@@ -7,11 +7,14 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 
+
+
 passport.use(new LocalStrategy({
         usernameField : 'email',
         passReqToCallback : true,
     },async function(req,email,password,done){
         try {
+            
             // getting requested user
             let user = await User.findOne({email : email});
 

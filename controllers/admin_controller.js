@@ -2,18 +2,27 @@ const User = require('../models/user');
 const Review = require('../models/review')
 const bcrypt = require('bcrypt');
 
+const { Validator } = require('node-input-validator');
+
 
 // function for admin dashboard
 module.exports.dashboard =async function(req,res){
-    let usersCount = await User.find({role : 'user'}).count();
-    let adminCount = await User.find({role : 'admin'}).count();
-    let reviewCount = await Review.find().count();
-    return res.render('dashboard',{
-        title : 'Dashboard | Admin Employee Review',
-        usersCount : usersCount,
-        reviewCount : reviewCount,
-        adminCount : adminCount
-    });
+    try {
+        let usersCount = await User.find({role : 'user'}).count();
+        let adminCount = await User.find({role : 'admin'}).count();
+        let reviewCount = await Review.find().count();
+        return res.render('dashboard',{
+            title : 'Dashboard | Admin Employee Review',
+            usersCount : usersCount,
+            reviewCount : reviewCount,
+            adminCount : adminCount
+        });
+        
+    } catch (error) {
+        console.log('Error in dashboard',error);
+        return res.render('error');
+
+    }
 }
 
 
@@ -32,7 +41,7 @@ module.exports.allUsers = async function(req,res){
 
     } catch (error) {
         console.log('Error in showing user in admin',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -47,6 +56,19 @@ module.exports.addEmployee = async function(req,res){
 // for creating new employee 
 module.exports.createEmployee = async function(req,res){
     try {
+        let v = new Validator(req.body,{
+            name : 'required',
+            email : 'required',
+            password : 'required',
+            confirm_password : 'required'
+        });
+        const matched = await v.check();
+        if(!matched){
+            return res.render('add_employee',{
+                errors : v.errors,
+            });
+        }
+        
         if(req.body.password == req.body.confirm_password){
             let user = await User.create({
                 name : req.body.name,
@@ -65,7 +87,7 @@ module.exports.createEmployee = async function(req,res){
         
     } catch (error) {
         console.log('Error in Creating user',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -84,7 +106,34 @@ module.exports.editEmployee = async function(req,res){
         return res.redirect('back');
     } catch (error) {
         console.log('Error in employee',error);
-        return;
+        return res.render('error');
+    }
+}
+
+// for updating the existing employee
+
+module.exports.updateEmployee = async function(req,res){
+    try {
+        let user = await User.findById(req.params.id);
+        if(user){
+            if(req.body.password == req.body.confirm_password){
+                user.name = req.body.name;
+                user.email = req.body.email;
+                user.password = bcrypt.hashSync(req.body.password,10);
+                await user.save();
+                req.flash('success','User Updated Successfully');
+                return res.redirect('/admin/users');
+            }
+            req.flash('error',"Password Doesn't Matched!");
+            return res.redirect('back');
+
+        }
+        req.flash('error','Invalid Employee!');
+        return res.redirect('back');
+        
+    } catch (error) {
+        console.log('Errors in updating user',error);
+        return res.render('error');
     }
 }
 
@@ -103,7 +152,7 @@ module.exports.promote = async function(req,res){
         return res.redirect('back');
     } catch (error) {
         console.log('Error in promoting',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -141,7 +190,7 @@ module.exports.deleteEmployee = async function(req,res){
         
     } catch (error) {
         console.log('Error in Delete Employee',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -159,7 +208,7 @@ module.exports.assign = async function(req,res){
         });
     } catch (error) {
         console.log('Error in assign',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -184,7 +233,7 @@ module.exports.getEmployee = async function(req,res){
         
     } catch (error) {
         console.log('Error in getting employee',error);
-        return;
+        return res.render('error');
     }
 }   
 
@@ -217,7 +266,7 @@ module.exports.assignEmployee = async function(req,res){
         
     } catch (error) {
         console.log('Error in assign',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -248,7 +297,7 @@ module.exports.removeAssigned = async function(req,res){
         });
     } catch (error) {
         console.log('Error in removing assigned',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -290,7 +339,7 @@ module.exports.userReviews = async function(req,res){
             
         } catch (error) {
             console.log('Error in user Reviews',error);
-            return;
+            return res.render('error');
         }
 }
 
@@ -308,6 +357,6 @@ module.exports.getReview = async function(req,res){
 
     } catch (error) {
         console.log('error in get review',error);
-        return;
+        return res.render('error');
     }
 }   

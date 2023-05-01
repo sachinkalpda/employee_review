@@ -1,9 +1,11 @@
 const User = require('../models/user');
 const Review = require('../models/review');
 
+const { Validator } = require('node-input-validator');
+
 const bcrypt = require('bcrypt');
 
-module.exports.login = function(req,res){
+module.exports.login = async function(req,res){
     if(req.isAuthenticated()){
         if(req.user.role == 'admin'){
             return res.redirect('/admin/dashboard');
@@ -43,6 +45,18 @@ module.exports.register = function(req,res){
 
 module.exports.createUser = async function(req,res){
     try {
+        let v = new Validator(req.body,{
+            name : 'required',
+            email : 'required',
+            password : 'required',
+            confirm_password : 'required'
+        });
+        const matched = await v.check();
+        if(!matched){
+            return res.render('register',{
+                errors : v.errors,
+            });
+        }
         if(req.body.password == req.body.confirm_password){
             let user = await User.create({
                 name : req.body.name,
@@ -61,7 +75,7 @@ module.exports.createUser = async function(req,res){
         
     } catch (error) {
         console.log('Error in Creating user',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -91,6 +105,6 @@ module.exports.reviewEmployee = async  function(req,res){
         
     } catch (error) {
         console.log('Error in review',error);
-        return;
+        return res.render('error');
     }
 }

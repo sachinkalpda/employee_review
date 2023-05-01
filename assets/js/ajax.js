@@ -14,7 +14,11 @@ $(document).ready(function(){
 
     function renderAssigned(employees){
         let assigned = $('#assigned');
+        $('.not-found').html('');
         assigned.html('');
+        if(employees.length == 0){
+            $('.not-found').html('No Data Found!');
+        }
         employees.forEach(function(employee,index){
             assigned.append(`<tr>
             <th scope="row">${index+1}</th>

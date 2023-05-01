@@ -7,21 +7,41 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" class="form-custom" placeholder="Enter Name..." value="<%= (locals.employee)? employee.name : '' %>">
+                        <span class="text-danger error">
+                        <% if(typeof errors != 'undefined' && typeof errors.name != 'undefined') { %>
+                            <%= errors.name.message %>
+                        <% }%>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" class="form-custom" placeholder="Enter Email..."
                         value="<%= (locals.employee)? employee.email : '' %>">
+                        <span class="text-danger error">
+                        <% if(typeof errors != 'undefined' && typeof errors.email != 'undefined') { %>
+                            <%= errors.email.message %>
+                        <% }%>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-custom"
                             placeholder="Enter Password...">
+                            <span class="text-danger error">
+                            <% if(typeof errors != 'undefined' && typeof errors.password != 'undefined') { %>
+                                <%= errors.password.message %>
+                            <% }%>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password</label>
                         <input type="password" id="confirm_password" name="confirm_password" class="form-custom"
                             placeholder="Re-enter Password...">
+                            <span class="text-danger error">
+                            <% if(typeof errors != 'undefined' && typeof errors.confirm_password != 'undefined') { %>
+                                <%= errors.confirm_password.message %>
+                            <% }%>
+                        </span>
                     </div>
 
 

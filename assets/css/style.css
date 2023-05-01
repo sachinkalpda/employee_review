@@ -3,6 +3,10 @@
     margin: 0;
     padding: 0;
 }
+.error{
+    font-size: 14px;
+    font-weight: 500;
+}
 
 /* login page styling */
 .login-wrapper{

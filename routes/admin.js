@@ -26,6 +26,8 @@ router.post('/users/save',passport.checkAuthentication,passport.checkAdmin,admin
 // route for edit the existing user
 router.get('/users/edit/:id',passport.checkAuthentication,passport.checkAdmin,adminController.editEmployee);
 
+router.post('/users/update/:id',passport.checkAuthentication,passport.checkAdmin,adminController.updateEmployee);
+
 router.get('/users/promote/:id',passport.checkAuthentication,passport.checkAdmin,adminController.promote);
 
 // route for delete the existing user

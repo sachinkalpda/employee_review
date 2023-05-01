@@ -17,7 +17,7 @@ module.exports.allReviews = async function(req,res){
         
     } catch (error) {
         console.log('Error in review',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -33,7 +33,7 @@ module.exports.addReview = async function(req,res){
         
     } catch(error) {
         console.log('Error in review',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -82,7 +82,7 @@ module.exports.createReview = async function(req,res){
         
     } catch (error) {
         console.log('Error in creating review',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -101,7 +101,7 @@ module.exports.view = async function(req,res){
         
     } catch (error) {
         console.log('Error in review view',error);
-        return;
+        return res.render('error');
     }
 }
 
@@ -121,6 +121,6 @@ module.exports.delete = async function(req,res){
         return;
     } catch (error) {
         console.log('Error in review',error);
-        return;
+        return res.render('error');
     }
 }

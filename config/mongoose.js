@@ -1,4 +1,4 @@
-const { error } = require('console');
+
 const mongoose = require('mongoose');
 
 // mongoose connection

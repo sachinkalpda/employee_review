@@ -5,8 +5,8 @@
                 <h3>Add Review</h3>
                 <form action="/admin/reviews/save" method="POST">
                     <div class="form-group">
-                        <label for="employee">Select Employee</label>
-                       <select name="employee" id="employee" class="form-custom">
+                        <label for="employees">Select Employee</label>
+                       <select name="employee" id="employees" class="form-custom">
                             <% for(let user of users){ %>
                             <option value="<%= user.id %>"><%= user.name %></option>
                             <%} %>
