@@ -30,10 +30,10 @@
                         <td><%= user.role %></td>
                         <td><%= moment(user.createdAt).fromNow() %></td>
                         <td>
-                          <a href="/admin/users/review/<%= user.id %>" class="me-2"><i class="fa-solid fa-circle-info text-info"></i></a>
-                          <a href="/admin/users/edit/<%= user.id %>" class="me-2"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
-                          <a href="/admin/users/edit/<%= user.id %>" class="me-2"><a href="/admin/users/promote/<%= user.id %>" class="me-2" title="Promote To Admin"><i class="fa-solid fa-turn-up text-warning"></i></a></a>
-                          <a href="/admin/users/delete/<%= user.id %>" class="delete"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                          <a href="/admin/users/review/<%= user.id %>" class="me-2" title="View Reviews"><i class="fa-solid fa-circle-info text-info"></i></a>
+                          <a href="/admin/users/edit/<%= user.id %>" class="me-2" title="Edit Employee"><i class="fa-regular fa-pen-to-square text-primary"></i></a>
+                          <a href="/admin/users/promote/<%= user.id %>" class="me-2" title="Promote To Admin"><i class="fa-solid fa-turn-up text-warning"></i></a>
+                          <a href="/admin/users/delete/<%= user.id %>" class="delete" title="Delete Employee"><i class="fa-regular fa-trash-can text-danger"></i></a>
                         </td>
                       </tr>
                       <% }) %>

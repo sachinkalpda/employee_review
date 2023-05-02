@@ -40,12 +40,12 @@ module.exports.addReview = async function(req,res){
 // for adding a new review for a user by admin
 module.exports.createReview = async function(req,res){
     try {
-        let reviewExist = await Review.find({ 
-            reviewer : req.user._id,
-            user : req.body.employee,
+        let assignedUser = await Review.find({ 
+            assigned :  req.user._id,
+            _id : req.body.employee,
             });
 
-        if(reviewExist.length == 0){
+        if(assignedUser){
             let user = await User.findById(req.body.employee);
             let reviewer = await User.findById(req.user._id);
             if(reviewer){
@@ -63,7 +63,7 @@ module.exports.createReview = async function(req,res){
                         reviewer.assigned.pull(user._id);
                         await reviewer.save();
                         req.flash('success','Review Added!');
-                        return res.redirect('back');
+                        return res.redirect('/');
                     }
                     req.flash('error','Something Went Wrong!');
                     return res.redirect('back');
@@ -76,7 +76,7 @@ module.exports.createReview = async function(req,res){
             return res.redirect('back');
             
         }
-        req.flash('error',"Already Reviewed!");
+        req.flash('error',"User Not Assigned!");
         return res.redirect('back');
 
         
