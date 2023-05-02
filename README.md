@@ -17,7 +17,20 @@ Features :
 10. New user can also register from register page.
 
 
-In this application any new user registered has by default role is 'user'. Their will be no admin in fresh application.
-So to make it admin you have to manually change thier role to 'admin' from Database. After making a admin you can promote any user to admin.
+
+
+Steps to Setup to Local :
+
+1. First download the code zip from repo.
+2. Extract the zip.
+3. Your System should has installed node and mongo db.
+4. Open terminal and go to the directory where project is located.
+5. Run the command "npm install".
+6. After that Run command "npm start".
+7. Register a new user.
+
+
+Note :-  In this application any new user registered has by default role is 'user'. Their will be no admin in fresh application.
+So to make it admin you have to manually change thier role to 'admin' from Database. After making a admin you can promote any user to admin from admin panel.
 
 Above Step is only for fresh application.
