@@ -13,7 +13,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Employee</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Reviewer Role</th>
                         <th scope="col">Stars</th>
                         <th scope="col">Reviewed By</th>
                         <th scope="col">Reviewed On</th>
@@ -25,7 +25,7 @@
                       <tr>
                         <th scope="row"><%= index+1 %></th>
                         <td><%= review.user.name %></td>
-                        <td><%= review.user.role %></td>
+                        <td><%= review.reviewer.role %></td>
                         <td><%= review.stars %><span class="text-warning">★</span></td>
                         <td><%= review.reviewer.name %></td>
                         <td><%= moment(review.createdAt).fromNow() %></td>

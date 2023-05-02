@@ -85,6 +85,45 @@ module.exports.createReview = async function(req,res){
         return res.render('error');
     }
 }
+// for rendering the edit review page
+module.exports.editReview = async function(req,res){
+    try {
+        let review = await Review.findById(req.params.id);
+        if(review){
+            return res.render('edit_review',{
+                review : review
+            });
+        }
+        req.flash('error','Invalid Reivew');
+        return res.redirect('back');
+        
+    } catch (error) {
+        console.log('Error in edit review',error);
+        return res.render('error');
+    }
+}
+
+// for updating the review
+
+module.exports.updateReview = async function(req,res){
+    try {
+        let review = await Review.findById(req.params.id);
+        if(review){
+            review.review = req.body.review;
+            review.feedback = req.body.feedback;
+            review.stars = req.body.rate;
+            await review.save();
+            req.flash('success','Review Updated Successfully');
+            return res.redirect('/admin/reviews/all');
+        }
+        req.flash('error','Invalid Reivew');
+        return res.redirect('back');
+    } catch (error) {
+        console.log('Error in udpating review',error);
+        return res.render('error');
+    }
+}
+
 
 // for viewing the review information
 module.exports.view = async function(req,res){
